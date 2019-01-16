@@ -1,0 +1,268 @@
+﻿[
+	{
+		"DateLastLogin": "09-Jan-2019 15:41:09Z",
+		"DateRegistered": "01-Apr-1994+0100",
+		"Email": "fmcintyre@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "01-Apr-1994+0100",
+			"DateLastWorked": "09-Jan-2019 15:48:40Z",
+			"Department": "Adm",
+			"FirstName": "Fiona",
+			"HomeAddress": "Fifi's home address",
+			"LastName": "McIntyre",
+			"MiddleName": "Rhys",
+			"MonthlySalaryInEUR": 3220,
+			"PIN": 65432109872001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "fmcintyre"
+	},
+	{
+		"DateLastLogin": "09-Jan-2019 09:12:33Z",
+		"DateRegistered": "22-Sep-2003+0100",
+		"Email": "nboyd@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "22-Sep-2003+0100",
+			"DateLastWorked": "09-Jan-2019 17:03:15Z",
+			"Department": "CSR",
+			"FirstName": "Nolan",
+			"HomeAddress": "Nolan's home address",
+			"LastName": "Boyd",
+			"MiddleName": "James",
+			"MonthlySalaryInEUR": 2950,
+			"PIN": 87654321097001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "nboyd"
+	},
+	{
+		"DateLastLogin": "07-Jan-2019 14:36:02Z",
+		"DateRegistered": "18-Mar-1994Z",
+		"Email": "cmcguigan@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "18-Mar-1994Z",
+			"DateLastWorked": "19-Dec-2018 11:54:02Z",
+			"Department": "Man",
+			"FirstName": "Cillian",
+			"HomeAddress": "Undisclosed",
+			"LastName": "McGuigan",
+			"MiddleName": "Orin",
+			"MonthlySalaryInEUR": 8800,
+			"PIN": 65432109870000,
+			"WorkAddress": "3-5 Road R330, Cathair na Mart, Contae Mhaigh Eo, F28 A088, Connachta, Eire"
+		},
+		"PhoneNumber": "+353(0)98-765-4321",
+		"PhoneNumberConfirmed": true,
+		"UserName": "cmcguigan"
+	},
+	{
+		"DateLastLogin": "09-Jan-2019 08:52:16Z",
+		"DateRegistered": "18-Mar-1994Z",
+		"Email": "foleary@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "18-Mar-1994Z",
+			"DateLastWorked": "09-Jan-2019 17:27:22Z",
+			"Department": "FBI",
+			"FirstName": "Feargus",
+			"HomeAddress": "Feargus' home address",
+			"LastName": "O'Leary",
+			"MiddleName": "Mervin",
+			"MonthlySalaryInEUR": 6660,
+			"PIN": 54321098763001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "foleary"
+	},
+	{
+		"DateLastLogin": "08-Jan-2019 11:18:55Z",
+		"DateRegistered": "10-Nov-2011Z",
+		"Email": "eobrien@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "10-Nov-2011Z",
+			"DateLastWorked": "08-Jan-2019 11:49:32Z",
+			"Department": "HR",
+			"FirstName": "Eileen",
+			"HomeAddress": "Elly's home address",
+			"LastName": "O'Brien",
+			"MiddleName": "Gareth",
+			"MonthlySalaryInEUR": 5260,
+			"PIN": 87654321091002,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "eobrien"
+	},
+	{
+		"DateDeleted": "17-Oct-2011+0100",
+		"DateLastLogin": "14-Oct-2011 14:24:37+0100",
+		"DateRegistered": "08-Apr-1994+0100",
+		"Email": "kriordan@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "08-Apr-1994+0100",
+			"DateLastWorked": "14-Oct-2011 15:08:11+0100",
+			"DateRelieved": "17-Oct-2011+0100",
+			"Department": "HR",
+			"FirstName": "Kelsey",
+			"HomeAddress": "Kelsey's last known home address",
+			"LastName": "Riordan",
+			"MiddleName": "Daeg",
+			"MonthlySalaryInEUR": 0,
+			"PIN": 76543210981001,
+			"WorkAddress": "Resigned"
+		},
+		"UserName": "kriordan"
+	},
+	{
+		"DateLastLogin": "08-Jan-2019 16:03:42Z",
+		"DateRegistered": "02-May-1994+0100",
+		"Email": "dlangton@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "02-May-1994+0100",
+			"DateLastWorked": "08-Jan-2019 19:32:08Z",
+			"Department": "RnD",
+			"FirstName": "Deirdra",
+			"HomeAddress": "Didi's home address",
+			"LastName": "Langton",
+			"MiddleName": "Sean",
+			"MonthlySalaryInEUR": 4500,
+			"PIN": 76543210988001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "dlangton"
+	},
+	{
+		"DateLastLogin": "09-Jan-2019 12:02:13Z",
+		"DateRegistered": "24-Feb-1995Z",
+		"Email": "csharpindra@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "24-Feb-1995Z",
+			"DateLastWorked": "09-Jan-2019 16:19:22Z",
+			"Department": "IT",
+			"FirstName": "Chandradev",
+			"HomeAddress": "Chad's home address",
+			"LastName": "Arpindra",
+			"MiddleName": "Shekhar",
+			"MonthlySalaryInEUR": 3740,
+			"PIN": 76543210989001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "csharpindra"
+	},
+	{
+		"DateLastLogin": "07-Jan-2019 15:15:39Z",
+		"DateRegistered": "12-May-1994+0100",
+		"Email": "kgerhardt@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "12-May-1994+0100",
+			"DateLastWorked": "08-Jan-2019 03:06:14Z",
+			"Department": "Ops",
+			"FirstName": "Kurt",
+			"HomeAddress": "Kurt's home address",
+			"LastName": "Gerhardt",
+			"MiddleName": "Vans",
+			"MonthlySalaryInEUR": 5090,
+			"PIN": 54321098764001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "kgerhardt"
+	},
+	{
+		"DateLastLogin": "09-Jan-2019 09:31:51Z",
+		"DateRegistered": "13-Apr-1994+0100",
+		"Email": "kdoyle@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "13-Apr-1994+0100",
+			"DateLastWorked": "09-Jan-2019 17:40:01Z",
+			"Department": "LnP",
+			"FirstName": "Keana",
+			"HomeAddress": "Kiki's home address",
+			"LastName": "Doyle",
+			"MiddleName": "Moran",
+			"MonthlySalaryInEUR": 2800,
+			"PIN": 76543210986001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "kdoyle"
+	},
+	{
+		"DateLastLogin": "09-Jan-2019 11:08:36Z",
+		"DateRegistered": "05-Aug-2015+0100",
+		"Email": "smcintyre@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "05-Aug-2015+0100",
+			"DateLastWorked": "09-Jan-2019 15:39:16Z",
+			"Department": "SnM",
+			"FirstName": "Shae",
+			"HomeAddress": "Shae's home address",
+			"LastName": "McIntyre",
+			"MiddleName": "Rowan",
+			"MonthlySalaryInEUR": 2175,
+			"PIN": 87654321095002,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "smcintyre"
+	},
+	{
+		"DateDeleted": "23-Jul-2015+0100",
+		"DateLastLogin": "25-Jul-2015 10:14:09+0100",
+		"DateRegistered": "19-Aug-1994+0100",
+		"Email": "otutt@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "19-Aug-1994+0100",
+			"DateLastWorked": "22-Jul-2015 16:49:22+0100",
+			"DateRelieved": "23-Jul-2015+0100",
+			"Department": "SnM",
+			"FirstName": "Odhran",
+			"HomeAddress": "Odhran's last known home address",
+			"LastName": "Tutt",
+			"MiddleName": "Pierce",
+			"MonthlySalaryInEUR": 0,
+			"PIN": 74563210985001,
+			"WorkAddress": "Relieved"
+		},
+		"UserName": "otutt"
+	},
+	{
+		"DateLastLogin": "09-Jan-2019 13:03:25Z",
+		"DateRegistered": "06-Jan-1995Z",
+		"Email": "awebber@pertensa.com",
+		"EmailConfirmed": true,
+		"Employee": {
+			"DateHired": "06-Jan-1995Z",
+			"DateLastWorked": "09-Jan-2019 23:19:44Z",
+			"Department": "IT",
+			"FirstName": "Aiden",
+			"HomeAddress": "Main office basement",
+			"LastName": "Webber",
+			"MiddleName": "Lochlain",
+			"MonthlySalaryInEUR": 3060,
+			"PIN": 54321098769001,
+			"WorkAddress": "Headquarters"
+		},
+		"UserName": "awebber"
+	},
+	{
+		"DateLastLogin": "21-Dec-2018 10:05:06+0200",
+		"DateRegistered": "06-Nov-2018+0200",
+		"Client": {
+			"CompanyName": "BolSar EOOD",
+			"FirstName": "Asen",
+			"LastName": "Kiprov",
+			"ShippingAddress": "Sofia, Bulgaria"
+		},
+		"Email": "assenkiprov@abv.bg",
+		"PhoneNumber": "+359897907691",
+		"UserName": "akiprov"
+	}
+]

@@ -1,0 +1,59 @@
+﻿@using PertensaCo.Web.Areas.Logistics.Models;
+@using static PertensaCo.Common.Extensions.EnumExtensions;
+
+@model SupplyCheckViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<div class="d-flex flex-row my-1 px-1">
+	<table class="table table-hover table-sm mx-auto w-auto">
+		<thead>
+			<tr>
+				<th class="text-center" scope="col"><span class="fas fa-atom"></span></th>
+				<th scope="col">Material</th>
+				<th scope="col">Form</th>
+				<th scope="col">Price per KG (&euro;)</th>
+				<th scope="col">Quantity (KG)</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var material in Model.Materials)
+			{
+				<tr>
+					<th scope="row" title="Element">[@material.Element.ToString()]</th>
+					<td title="Material">@material.Element.GetDisplayName()</td>
+					<td title="Form">@material.Form.ToString()</td>
+					<td title="Price per KG (€)">@material.PricePerKgInEur</td>
+					<td class="cell-reactive" title="Quantity (KG)">
+						@if (material.QuantityInKg != 0)
+						{
+							<span>@material.QuantityInKg</span>
+						}
+						else
+						{
+							<span class="text-danger">DEPLETED</span>
+							<a asp-area="Logistics" asp-controller="Supplies" asp-action="Procure" asp-route-mid="@material.Id" class="btn btn-plaque" style="display:none">
+								<span>Restock</span>
+							</a>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+@section Scripts {
+	<script>
+		$(function () {
+			$('.cell-reactive').hover(function () {
+				$('.text-danger', this).hide();
+				$('a', this).show();
+			}, function () {
+				$('.text-danger', this).show();
+				$('a', this).hide();
+			});
+		});
+	</script>
+}

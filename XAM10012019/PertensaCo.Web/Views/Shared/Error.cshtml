@@ -1,0 +1,51 @@
+﻿@using PertensaCo.Web.Models;
+
+@model ErrorViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column flex-grow-1 p-1">
+		<h3>
+			<span class="fas fa-exclamation-triangle fa-sm text-warning"></span>
+			<span class="text-danger">ERROR</span>
+		</h3>
+		<p class="px-1">
+			<span>&nbsp;An unexpected event occurred while we were processing your request.</span>
+			<br />
+			<span>&nbsp;Please contact an administrator with the information provided below to get help.</span>
+		</p>
+		<div class="input-group px-1">
+			<div class="input-group-prepend">
+				<span class="input-group-text p-1">
+					<label asp-for="ErrorId" class="m-0"><b>Error ID:</b></label>
+				</span>
+			</div>
+			<input asp-for="ErrorId" class="form-control p-1 p-md-2 bg-light text-danger" aria-label="Error ID" readonly style="max-width: 400px" />
+			<div class="input-group-append">
+				<button type="button" class="btn btn-outline-warning" id="copyButton" data-toggle="tooltip" data-placement="bottom" title="Copy to clipboard">
+					<span class="far fa-copy"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<script>
+		$(function () {
+			$('#copyButton').tooltip();
+			$('#copyButton').click(function () {
+				$('#ErrorId').select();
+				var copied = document.execCommand('copy');
+				if (copied) {
+					$(this).tooltip('hide');
+					$(this).attr('data-original-title', 'Copied');
+					$(this).tooltip('fixTitle');
+					$(this).tooltip('show');
+				}
+			});
+		});
+	</script>
+}

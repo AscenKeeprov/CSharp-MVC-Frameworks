@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+	var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+	var consentRequired = !consentFeature?.CanTrack ?? false;
+	var consentCookie = consentFeature?.CreateConsentCookie();
+}
+
+@if (consentRequired)
+{
+	<div class="d-flex flex-row my-1 px-1" id="cookieConsentRow">
+		<div class="d-flex flex-column flex-grow-1">
+			<div class="alert alert-secondary alert-dismissible fade show m-0 p-2 text-center" id="cookieConsent" role="alert">
+				<strong>
+					<span>This site relies on cookies to process your personal information. Click </span>
+					<a asp-controller="Home" asp-action="Privacy">here</a>
+					<span> to learn more about our privacy policy.</span>
+				</strong>
+				<button type="button" class="btn btn-plaque" id="consentButton" value="@consentCookie" data-dismiss="alert" aria-label="Acknowledge">
+					<span class="far fa-times-circle fa-sm screw-head"></span>
+					<span aria-hidden="true">Acknowledge</span>
+					<span class="far fa-times-circle fa-sm screw-head"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		var consentButton = document.getElementById('consentButton');
+		var consentCookie = consentButton.value;
+		consentButton.addEventListener('click', function () {
+			document.cookie = consentCookie;
+			document.getElementById('cookieConsentRow').style.display = 'none';
+		});
+	</script>
+}

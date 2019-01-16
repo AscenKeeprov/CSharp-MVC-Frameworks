@@ -1,0 +1,359 @@
+﻿@using PertensaCo.Web.Areas.Innovation.Models;
+
+@model ResearchViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<partial name="~/Views/Shared/_StatusMessagePartial.cshtml" />
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column form-container col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+		<form asp-area="Innovation" asp-controller="Research" asp-action="Conduct" method="post" role="form">
+			<fieldset>
+				<legend class="text-center">Research new alloys</legend>
+				<div class="form-group">
+					<p class="text-justify px-1 text-indent-1">
+						<span>Pick materials to experiment with, starting from the core element.</span>
+						<span>Often predominant but balanced compositions are allowed for specialized alloys.</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="BaseName" class="input-group-text"></label>
+						</div>
+						<select asp-for="BaseName" asp-items="@Model.BaseMaterials" class="custom-select">
+							<option value="">&raquo;&nbsp;Select a base material&nbsp;&laquo;</option>
+						</select>
+						<div class="input-group-append">
+							<button id="baseAddButton" class="btn btn-outline-success" title="Add" type="button" disabled>
+								<span class="fas fa-plus-square"></span>
+							</button>
+						</div>
+					</div>
+					<span asp-validation-for="BaseName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="text-justify px-1 text-indent-1">
+						<span>Combine with additional elements to modify and improve the properties of the alloy.</span>
+						<span>Consult senior staff for notes on previous experiments and suggested enhancers.</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="AdditiveNames" class="input-group-text"></label>
+						</div>
+						<select asp-for="AdditiveNames" asp-items="@Model.AdditionalMaterials" class="custom-select"></select>
+						<div class="input-group-append">
+							<button id="additivesAddButton" class="btn btn-outline-success" title="Add" type="button" disabled>
+								<span class="fas fa-plus-square"></span>
+							</button>
+						</div>
+					</div>
+					<span asp-validation-for="AdditiveNames" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="text-justify px-1 text-indent-1">
+						<span>Adjust quantities as needed to achieve the desired result.</span>
+						<span>Please adhere to technical recommendations and supply regulation quotas:</span>
+						<ul>
+							<li class="text-justify">
+								<span><b>Base</b> - recommended ratio of &#126;<sup>3</sup>&frasl;<sub>7</sub></span>
+								<span> up to &#126;<sup>6</sup>&frasl;<sub>7</sub> per probe.</span>
+								<span>Prefer malleables when testing alloys for fine instrumentation and electronics.</span>
+								<span>Mark rigids for tempering before sending for mass production.</span>
+							</li>
+							<li class="text-justify">
+								<span><b>Additives</b> - 2.8%-11.6% each for standard and 0.9%-9.7% for superalloys with more than 6 constituents.</span>
+								<span>Always perform oxidation and resistivity tests prior to incineration and amalgamation.</span>
+							</li>
+						</ul>
+					</p>
+					<div class="flex-row form-row justify-content-around my-1 px-1" id="elementsRow"></div>
+					<div class="d-none flex-row form-row justify-content-around my-1 px-1">
+						<div class="element-container" hidden>
+							<button class="btn btn-remove" title="Remove" type="button" onclick="RemoveElementContainer($(this). parent())">
+								<i class="fas fa-minus-square fa-sm"></i>
+							</button>
+							<code class="element-container-code"></code>
+							<label class="element-container-label"></label>
+							<input class="element-container-input" dir="rtl" max="1" min="0" step="0.001" type="number" value="0.1" onchange="UpdateElementValue($(this),$(this).siblings('label').first())" />
+							<span class="element-container-text" title="Remaining reserves"></span>
+						</div>
+					</div>
+					<div class="progress" id="elementsProgress" aria-valuenow="0" style="height:32px"></div>
+					<div class="d-none">
+						<div class="element-bar progress-bar" style="width:10%" aria-valuemax="0" aria-valuemin="0" aria-valuenow="0" role="progressbar" hidden></div>
+					</div>
+				</div>
+				<div class="form-group my-2 text-center">
+					<audio id="clang" preload="auto">
+						<source src="~/sounds/clang.mp3" type="audio/mp3" />
+					</audio>
+					<button asp- type="submit" class="btn btn-outline-warning">
+						<span class="fas fa-flask fa-xl"></span>
+						<span>&nbsp;Conduct experiment&nbsp;</span>
+					</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<script src="~/js/select.min.js"></script>
+	<script src="~/js/status.min.js"></script>
+	<script>
+		var baseSelect = $('#BaseName');
+		var baseAddButton = $('#baseAddButton');
+		var additivesSelect = $('#AdditiveNames');
+		var additivesAddButton = $('#additivesAddButton');
+		var elementsRow = $('#elementsRow');
+		var elementsProgress = $('#elementsProgress');
+		var elementContainerMould = $('.element-container:hidden');
+		var elementProgressBarMould = $('.element-bar.progress-bar:hidden');
+		function GetMaterialReserves(materialInfo, materialContainer) {
+			var materialElement = materialInfo[0];
+			var materialForm = materialInfo[1];
+			$.ajax({
+				async: false,
+				data: {
+					elementName: materialElement,
+					formCode: materialForm
+				},
+				method: 'GET',
+				url: 'GetMaterialReserves',
+				success: function (response) {
+					materialContainer.children('input').attr('max', response.reserves);
+					materialContainer.children('span').html('/ ' + response.reserves + ' KG');
+				},
+				error: function () {
+					materialContainer.children('span').html('/ Unknown');
+				}
+			});
+		};
+		function RemoveElementContainer(container) {
+			container.remove();
+			elementsRow.trigger('change');
+			var element = container.find('label').first().html();
+			var quantity = container.find('input').first().val();
+			elementsProgress.trigger('change', [element, quantity]);
+		};
+		function UpdateElementValue(elementInput, elementLabel) {
+			var value = elementInput.val();
+			elementInput.attr('value', value);
+			var element = elementLabel.html();
+			var elementNewValue = 0;
+			elementsRow.children().each(function () {
+				if ($(this).find('label').first().html() == element) {
+					var containerQuantity = $(this).find('input').first().val();
+					elementNewValue += parseFloat(containerQuantity);
+				}
+			});
+			var elementProgressBar = elementsProgress
+				.find('.element-bar[resource="' + element + '"]').first();
+			var elementOldValue = parseFloat(elementProgressBar.attr('aria-valuenow'));
+			var elementsTotalQuantity = parseFloat(elementsProgress.attr('aria-valuenow'));
+			elementsTotalQuantity += elementNewValue - elementOldValue;
+			elementsProgress.attr('aria-valuenow', Math.round(elementsTotalQuantity * 1000) / 1000);
+			elementProgressBar.attr('aria-valuenow', Math.round(elementNewValue * 1000) / 1000);
+			elementsProgress.trigger('change');
+		};
+		$(function () {
+			$(window).on('beforeunload', function () {
+				baseSelect.val('').trigger('change');
+				additivesSelect.val('').trigger('change');
+			});
+		});
+		$(function () {
+			baseSelect.change(function () {
+				if ($(this).val() == '' || elementsRow.children('[typeof="base"]').length > 0) {
+					baseAddButton.attr('disabled', 'disabled');
+				} else {
+					baseAddButton.removeAttr('disabled');
+				}
+			});
+		});
+		$(function () {
+			baseAddButton.click(function () {
+				var baseCode = baseSelect.val();
+				var baseInfo = baseCode.split('_', 2);
+				elementContainerMould.clone().appendTo(elementsRow);
+				var baseContainer = elementsRow.find('.element-container:hidden').first();
+				GetMaterialReserves(baseInfo, baseContainer);
+				var containerInput = baseContainer.children('input').first();
+				containerInput.val(1).attr('value', 1);
+				baseContainer.children('code').first().html(baseCode);
+				var containerLabel = baseContainer.children('label');
+				containerLabel.html(baseInfo[0]);
+				containerLabel.attr('title', baseSelect.children(':selected').html());
+				baseContainer.removeAttr('hidden').attr('typeof', 'base');
+				baseSelect.children(':selected').each(function () {
+					$(this).prop('selected', false);
+					$(this).removeAttr('selected');
+					$(this).hide();
+				});
+				$(this).attr('disabled', 'disabled');
+				elementsRow.trigger('change');
+				elementProgressBarMould.clone().appendTo(elementsProgress);
+				var baseProgressBar = elementsProgress.find('.element-bar.progress-bar:hidden').first();
+				baseProgressBar.attr('aria-valuenow', containerInput.val());
+				baseProgressBar.attr('aria-valuemax', containerInput.attr('max'));
+				baseProgressBar.attr('resource', baseInfo[0]);
+				var elementsTotalQuantity = parseFloat(elementsProgress.attr('aria-valuenow'));
+				elementsTotalQuantity += parseFloat(containerInput.val());
+				elementsProgress.attr('aria-valuenow', Math.round(elementsTotalQuantity * 1000) / 1000);
+				baseProgressBar.html(baseInfo[0]);
+				baseProgressBar.addClass('bg-metal-' + baseInfo[0]);
+				baseProgressBar.removeAttr('hidden').attr('typeof', 'base');
+				elementsProgress.trigger('change');
+			});
+		});
+		$(function () {
+			additivesSelect.change(function () {
+				if ($(this).val() == '') {
+					additivesAddButton.attr('disabled', 'disabled');
+				} else {
+					additivesAddButton.removeAttr('disabled');
+				}
+			});
+		});
+		$(function () {
+			additivesAddButton.click(function () {
+				additivesSelect.val().forEach(function (additive) {
+					var additiveInfo = additive.split('_', 2);
+					elementContainerMould.clone().appendTo(elementsRow);
+					var additiveContainer = elementsRow.find('.element-container:hidden').first();
+					GetMaterialReserves(additiveInfo, additiveContainer);
+					var containerInput = additiveContainer.children('input').first();
+					additiveContainer.children('code').html(additive);
+					var containerLabel = additiveContainer.children('label');
+					containerLabel.html(additiveInfo[0]);
+					var currentAdditive = additivesSelect.find('[value="' + additive + '"]');
+					containerLabel.attr('title', currentAdditive.html());
+					additiveContainer.removeAttr('hidden').attr('typeof', 'additive');
+					currentAdditive.prop('selected', false);
+					currentAdditive.removeAttr('selected');
+					currentAdditive.hide();
+					var additiveProgressBar;
+					if (elementsProgress.children('[resource="' + additiveInfo[0] + '"]').length > 0) {
+						additiveProgressBar = elementsProgress.find('[resource="' + additiveInfo[0] + '"]').first();
+					} else {
+						elementProgressBarMould.clone().appendTo(elementsProgress);
+						var additiveProgressBar = elementsProgress.find('.element-bar.progress-bar:hidden').first();
+						additiveProgressBar.addClass('bg-metal-' + additiveInfo[0]);
+						additiveProgressBar.attr('resource', additiveInfo[0]);
+						additiveProgressBar.html(additiveInfo[0]);
+						additiveProgressBar.removeAttr('hidden').attr('typeof', 'additive');
+					}
+					var progressBarValue = parseFloat(additiveProgressBar.attr('aria-valuenow'));
+					progressBarValue += parseFloat(containerInput.val());
+					additiveProgressBar.attr('aria-valuenow', Math.round(progressBarValue * 1000) / 1000);
+					var progressBarMaxValue = parseFloat(additiveProgressBar.attr('aria-valuemax'));
+					progressBarMaxValue += parseFloat(containerInput.attr('max'));
+					additiveProgressBar.attr('aria-valuemax', Math.round(progressBarMaxValue * 1000) / 1000);
+					var elementsTotalQuantity = parseFloat(elementsProgress.attr('aria-valuenow'));
+					elementsTotalQuantity += parseFloat(containerInput.val());
+					elementsProgress.attr('aria-valuenow', Math.round(elementsTotalQuantity * 1000) / 1000);
+					elementsProgress.trigger('change');
+				});
+				elementsRow.trigger('change');
+			});
+		});
+		$(function () {
+			elementsRow.change(function () {
+				var addedElements = new Array();
+				$(this).find('.element-container-code').each(function () {
+					addedElements.push($(this).html().substr(0, 2));
+				});
+				baseSelect.children('[value!=""]').each(function () {
+					var element = $(this).val().substr(0, 2);
+					if (($.inArray(element, addedElements) >= 0)) {
+						$(this).prop('selected', false);
+						$(this).removeAttr('selected');
+						$(this).hide();
+					} else {
+						$(this).show();
+						if ($(this).attr('style') == '') {
+							$(this).removeAttr('style');
+						}
+					}
+				});
+				baseSelect.trigger('change');
+				additivesSelect.children('[value!=""]').each(function () {
+					var element = $(this).val().substr(0, 2);
+					if (($.inArray(element, addedElements) >= 0)) {
+						$(this).prop('selected', false);
+						$(this).removeAttr('selected');
+						$(this).hide();
+					} else {
+						$(this).show();
+						if ($(this).attr('style') == '') {
+							$(this).removeAttr('style');
+						}
+					}
+				});
+				additivesSelect.trigger('change');
+			});
+		});
+		$(function () {
+			elementsProgress.change(function (event, removedElement, removedQuantity) {
+				var elementsTotalQuantity = parseFloat($(this).attr('aria-valuenow'));
+				var elementQuantityRemoved = parseFloat(removedQuantity);
+				$(this).children('[resource="' + removedElement + '"]').each(function () {
+					var elementQuantity = parseFloat($(this).attr('aria-valuenow'));
+					if (elementQuantity <= elementQuantityRemoved) {
+						elementsTotalQuantity -= elementQuantity;
+						elementQuantity = 0;
+						$(this).remove();
+					} else {
+						elementsTotalQuantity -= elementQuantityRemoved;
+						elementQuantity -= elementQuantityRemoved;
+						$(this).attr('aria-valuenow', Math.round(elementQuantity * 1000) / 1000);
+					}
+					elementsProgress.attr('aria-valuenow', Math.round(elementsTotalQuantity * 1000) / 1000);
+				});
+				$(this).children('.element-bar.progress-bar').each(function () {
+					var elementQuantity = parseFloat($(this).attr('aria-valuenow'));
+					var elementPerCentOfTotal = Math.round(elementQuantity / elementsTotalQuantity * 1000) / 10;
+					$(this).attr('style', 'width:' + elementPerCentOfTotal + '%');
+					$(this).html($(this).attr('resource') + '(' + elementPerCentOfTotal + '%)');
+				});
+			});
+		});
+		$(function () {
+			$('form').submit(function (event) {
+				event.preventDefault();
+				ClearStatus();
+				var action = $(this).attr('action');
+				var materials = [];
+				elementsRow.children().each(function () {
+					var materialCode = $(this).find('code').first().html();
+					var material = {
+						Code: materialCode,
+						Element: $(this).find('label').first().html(),
+						Form: materialCode.substr(materialCode.indexOf('_') + 1),
+						Quantity: $(this).find('input').first().val(),
+						Type: $(this).attr('typeof')
+					};
+					materials.push(material);
+				});
+				var method = $(this).attr('method');
+				var token = $('input[name="__AntiforgeryToken"]').val();
+				$.ajax({
+					data: {
+						__AntiforgeryToken: token,
+						Materials: JSON.stringify(materials)
+					},
+					method: method,
+					url: action,
+					success: function (response) {
+						var message = response.message;
+						DisplayInfo(message);
+					},
+					error: function (data) {
+						var message = data.responseJSON.message;
+						DisplayError(message);
+					}
+				});
+			});
+		});
+	</script>
+}

@@ -1,0 +1,155 @@
+﻿@using PertensaCo.Web.Areas.Logistics.Models;
+@using static PertensaCo.Common.Extensions.EnumExtensions;
+
+@model MaterialProcureViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column form-container col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+		<form asp-area="Logistics" asp-controller="Supplies" asp-action="Procure" method="post" role="form">
+			<fieldset>
+				<legend class="text-center">Raw material procurement form</legend>
+				<div class="form-group align-content-center">
+					<p class="px-1 text-indent-1">
+						<span>Choose which one of our suppliers should carry out the delivery:</span>
+					</p>
+					<div class="form-row flex-row justify-content-around">
+						@for (int i = 0; i < Model.Suppliers.Count(); i++)
+						{
+							var supplier = Model.Suppliers[i];
+							<div class="mx-1">
+								<label class="m-0">
+									<input asp-for="SupplierSpeed" type="radio" value="@((int)supplier)" />
+									<span>@supplier.GetDisplayName()</span>
+								</label>
+							</div>
+						}
+					</div>
+					<span asp-validation-for="SupplierSpeed" class="text-danger"></span>
+					<div class="form-row flex-row justify-content-end my-1 px-2">
+						<span class="mx-1 text-muted">Estimated delivery time (work days):</span>
+						<input id="EDT" class="small border-light text-center" type="text" value="1" readonly style="max-width:48px" />
+					</div>
+				</div>
+				<div class="form-group">
+					<p class="px-1 text-indent-1">
+						<span>Specify the raw material that needs to be restocked:</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="MaterialId" class="input-group-text"></label>
+						</div>
+						<select asp-for="MaterialId" asp-items="@Model.Materials" class="custom-select">
+							<option value="">&raquo;&nbsp;Select a material to procure&nbsp;&laquo;</option>
+						</select>
+					</div>
+					<span asp-validation-for="MaterialId" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="px-1 text-indent-1">
+						<span>Enter the size of the delivery batch in kilogrammes:</span>
+					</p>
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="Quantity" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="Quantity" type="number" step="0.001" class="form-control px-2 py-1" />
+						<div class="input-group-append">
+							<span class="input-group-text p-1">
+								<label asp-for="TotalPrice" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="TotalPrice" value="--" class="form-control px-2 py-1 bg-white" readonly />
+					</div>
+					<span asp-validation-for="Quantity" class="text-danger"></span>
+					<p class="px-1 text-justify text-indent-1">
+						<span>Bear in mind that none of the suppliers will accept orders for quantities lower than 5KG</span>
+						<span> and even those are acceptable only for rarer materials.</span>
+					</p>
+					<p class="px-1 text-justify text-indent-1">
+						<span>Huge batches (9 tonnes and above), on the other hand,</span>
+						<span> may take excessively long for the supplier to collect and transport.</span>
+						<span>Therefore, we have agreed on an upper order limit of 10 tonnes per month.</span>
+					</p>
+				</div>
+				<div class="form-group my-2 text-center">
+					<audio id="clang" preload="auto">
+						<source src="~/sounds/clang.mp3" type="audio/mp3" />
+					</audio>
+					<button type="submit" class="btn btn-plaque">
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+						<span>&nbsp;Request&nbsp;quote&nbsp;</span>
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+					</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+	<script src="~/js/select.min.js"></script>
+	<script>
+		function UpdateDeliveryTime() {
+			var supplierSpeed = parseInt($('#SupplierSpeed:checked').val());
+			var orderQuantity = parseFloat($('#Quantity').val());
+			var estimatedDeliveryTime = $('#EDT');
+			if (supplierSpeed > 0 && orderQuantity > 0) {
+				var quantitySpeedFactor = Math.round(orderQuantity / 500);
+				estimatedDeliveryTime.val(supplierSpeed + quantitySpeedFactor);
+			} else {
+				estimatedDeliveryTime.val('--');
+			}
+		};
+		function UpdatePrice() {
+			var materialId = $('#MaterialId').val();
+			var orderQuantity = $('#Quantity').val();
+			var totalPrice = $('#TotalPrice');
+			if (materialId != '' && parseFloat(orderQuantity) > 0) {
+				$.ajax({
+					type: 'get',
+					url: 'UpdatePrice?mid=' + materialId + '&qty=' + orderQuantity,
+					success: function (response) {
+						var price = response.price;
+						totalPrice.val(price);
+					},
+					error: function () {
+						alert('Failed to update price.')
+					}
+				});
+			} else {
+				totalPrice.val('--');
+			}
+		};
+		$(function () {
+			UpdateDeliveryTime();
+			UpdatePrice();
+		});
+		$(function () {
+			$('input[type="radio"]').change(function () {
+				UpdateDeliveryTime();
+			});
+		});
+		$(function () {
+			$('#MaterialId').change(function () {
+				UpdatePrice();
+			});
+		});
+		$(function () {
+			$('#Quantity').change(function () {
+				UpdateDeliveryTime();
+				UpdatePrice();
+			});
+		});
+		$(function () {
+			$('.btn-plaque').click(function () {
+				$('#clang')[0].play();
+			});
+		});
+	</script>
+}

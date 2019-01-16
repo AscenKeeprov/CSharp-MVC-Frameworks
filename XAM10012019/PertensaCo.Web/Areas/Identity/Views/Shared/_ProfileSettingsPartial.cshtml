@@ -1,0 +1,80 @@
+﻿@using PertensaCo.Web.Areas.Identity.Models;
+
+@model ProfileViewModel
+
+<fieldset>
+	<div class="form-row my-1 px-2 text-muted">
+		<span><b>Alias:</b>&nbsp;</span>
+		<input asp-for="Alias" class="border-0 p-0 text-muted" readonly tabindex="-1" />
+	</div>
+	<div class="form-row my-1 px-2 text-muted">
+		<span><b>Registered on:</b>&nbsp;</span>
+		<input asp-for="DateRegistered" class="border-0 p-0 text-muted" readonly tabindex="-1" />
+	</div>
+	<div class="form-group px-1">
+		<div class="input-group col-12 p-0">
+			<div class="input-group-prepend">
+				<span class="input-group-text p-1">
+					<label asp-for="EmailAddress" class="m-0"></label>
+				</span>
+			</div>
+			<input asp-for="EmailAddress" class="form-control border-right-0" />
+			<div class="input-group-append">
+				<span class="input-group-text p-1 bg-transparent">
+					@if (Model.IsEmailConfirmed)
+					{
+						<span class="text-success">
+							<span class="far fa-check-circle"></span>
+							<span class="small"><b>Confirmed</b></span>
+						</span>
+					}
+					else
+					{
+						<span class="text-danger">
+							<span class="fas fa-exclamation-circle"></span>
+							<span class="small"><b>Unconfirmed</b></span>
+						</span>
+					}
+				</span>
+			</div>
+		</div>
+		<span asp-validation-for="EmailAddress" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<div class="form-row px-2">
+			<a asp-area="Identity" asp-controller="Users" asp-action="ChangePassword" tabindex="-1">
+				<span>Change profile password</span>
+			</a>
+		</div>
+		<div class="form-row px-2">
+			<a href="#deleteProfileModal" data-toggle="modal" tabindex="-1">
+				<span class="text-danger">Delete profile</span>
+			</a>
+		</div>
+	</div>
+	<div class="form-group my-2 text-center">
+		<button asp-route-pid="@Model.Id" type="submit" class="btn btn-plaque">
+			<span class="far fa-times-circle fa-sm screw-head"></span>
+			<span>&nbsp;Save&nbsp;Changes&nbsp;</span>
+			<span class="far fa-times-circle fa-sm screw-head"></span>
+		</button>
+	</div>
+</fieldset>
+<div class="modal fade" id="deleteProfileModal" tabindex="-1" aria-label="Confirm profile deletion" aria-hidden="true" role="dialog">
+	<div class="modal-dialog modal-dialog-centered" role="alertdialog">
+		<div class="modal-content">
+			<div class="modal-header align-items-center justify-content-start">
+				<span class="fas fa-exclamation-triangle fa-xl my-1 px-1 text-warning">&nbsp;</span>
+				<h5 class="modal-title text-danger">Warning!</h5>
+			</div>
+			<div class="modal-body text-indent-1">
+				<span>This action is irreversible. You will not be able to use the profile any more.</span>
+				<span>It will also not be possible to create another profile with the same alias for a year.</span>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<a asp-area="Identity" asp-controller="Users" asp-action="Delete" asp-route-pid="@Model.Id" class="btn btn-outline-danger">Delete profile</a>
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>

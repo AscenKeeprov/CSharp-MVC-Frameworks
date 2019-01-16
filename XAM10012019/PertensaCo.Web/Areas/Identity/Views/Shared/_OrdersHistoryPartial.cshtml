@@ -1,0 +1,26 @@
+﻿@using PertensaCo.Web.Areas.Identity.Models;
+
+@model ClientProfileViewModel
+
+<p>A table of orders by №, status, date...</p>
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th scope="col">Order №</th>
+			<th scope="col">Placed On</th>
+			<th scope="col">Items</th>
+			<th scope="col">Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		@*@foreach (var order in Model.Orders)
+			{
+					<tr>
+						<th scope="row">@order.Id</th>
+						<td>@order.DatePlaced</td>
+						<td>@order.Items</td>
+						<td>@order.Status</td>
+					</tr>
+			}*@
+	</tbody>
+</table>

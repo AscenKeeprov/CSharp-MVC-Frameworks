@@ -1,0 +1,146 @@
+﻿[
+	{
+		"Department": "Adm",
+		"DisplayName": "Chief Administrative Officer",
+		"Name": "CAO"
+	},
+	{
+		"Department": "CSR",
+		"DisplayName": "Chief Communications Officer",
+		"Name": "CCO"
+	},
+	{
+		"Department": "Man",
+		"DisplayName": "Chief Executive Officer",
+		"Name": "CEO"
+	},
+	{
+		"Department": "FBI",
+		"DisplayName": "Chief Financial Officer",
+		"Name": "CFO"
+	},
+	{
+		"Department": "HR",
+		"DisplayName": "Chief Human Resources Officer",
+		"Name": "CHRO"
+	},
+	{
+		"Department": "RnD",
+		"DisplayName": "Chief Innovation Officer",
+		"Name": "CINO"
+	},
+	{
+		"Department": "IT",
+		"DisplayName": "Chief Information Officer",
+		"Name": "CIO"
+	},
+	{
+		"Department": "Ops",
+		"DisplayName": "Chief Operating Officer",
+		"Name": "COO"
+	},
+	{
+		"Department": "LnP",
+		"DisplayName": "Chief Procurement Officer",
+		"Name": "CPO"
+	},
+	{
+		"Department": "SnM",
+		"DisplayName": "Chief Revenue Officer",
+		"Name": "CRO"
+	},
+	{
+		"Department": "CSR",
+		"DisplayName": "Client Support and Relationships Manager",
+		"Name": "CSRManager"
+	},
+	{
+		"Department": "CSR",
+		"DisplayName": "Client Support and Relationships Worker",
+		"Name": "CSRWorker"
+	},
+	{
+		"Department": "FBI",
+		"DisplayName": "Finance and Business Intelligence Manager",
+		"Name": "FBIManager"
+	},
+	{
+		"Department": "FBI",
+		"DisplayName": "Finance and Business Intelligence Worker",
+		"Name": "FBIWorker"
+	},
+	{
+		"Department": "HR",
+		"DisplayName": "Human Resources Manager",
+		"Name": "HRManager"
+	},
+	{
+		"Department": "HR",
+		"DisplayName": "Human Resources Worker",
+		"Name": "HRWorker"
+	},
+	{
+		"Department": "IT",
+		"DisplayName": "Information Technologies Manager",
+		"Name": "ITManager"
+	},
+	{
+		"Department": "IT",
+		"DisplayName": "Information Technologies Worker",
+		"Name": "ITWorker"
+	},
+	{
+		"Department": "LnP",
+		"DisplayName": "Logistics and Procurement Manager",
+		"Name": "LnPManager"
+	},
+	{
+		"Department": "LnP",
+		"DisplayName": "Logistics and Procurement Worker",
+		"Name": "LnPWorker"
+	},
+	{
+		"Department": "Ops",
+		"DisplayName": "Operations Manager",
+		"Name": "OpsManager"
+	},
+	{
+		"Department": "Ops",
+		"DisplayName": "Operations Worker",
+		"Name": "OpsWorker"
+	},
+	{
+		"Department": "Adm",
+		"DisplayName": "Administration Manager",
+		"Name": "AdmManager"
+	},
+	{
+		"Department": "Adm",
+		"DisplayName": "Administration Worker",
+		"Name": "AdmWorker"
+	},
+	{
+		"Department": "RnD",
+		"DisplayName": "Research and Development Manager",
+		"Name": "RnDManager"
+	},
+	{
+		"Department": "RnD",
+		"DisplayName": "Research and Development Worker",
+		"Name": "RnDWorker"
+	},
+	{
+		"Department": "SnM",
+		"DisplayName": "Sales and Marketing Manager",
+		"Name": "SnMManager"
+	},
+	{
+		"Department": "SnM",
+		"DisplayName": "Sales and Marketing Worker",
+		"Name": "SnMWorker"
+	},
+	{
+		"DisplayName": "Web Site User",
+		"Name": "WebUser"
+	}
+]

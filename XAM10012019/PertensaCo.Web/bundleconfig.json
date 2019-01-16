@@ -1,0 +1,71 @@
+[
+	{
+		"outputFileName": "wwwroot/css/site.min.css",
+		"inputFiles": [
+			"wwwroot/css/site.css"
+		],
+		"minify": {
+			"enabled": true
+		}
+	},
+	{
+		"outputFileName": "wwwroot/lib/popper/popper.min.js",
+		"inputFiles": [
+			"wwwroot/lib/popper/popper.js"
+		],
+		"minify": {
+			"enabled": true
+		},
+		"sourceMap": true
+	},
+	{
+		"outputFileName": "wwwroot/js/ajax.min.js",
+		"inputFiles": [
+			"wwwroot/js/ajax.js"
+		],
+		"minify": {
+			"enabled": true
+		},
+		"sourceMap": false
+	},
+	{
+		"outputFileName": "wwwroot/js/checkcircle.min.js",
+		"inputFiles": [
+			"wwwroot/js/checkcircle.js"
+		],
+		"minify": {
+			"enabled": true
+		},
+		"sourceMap": false
+	},
+	{
+		"outputFileName": "wwwroot/js/select.min.js",
+		"inputFiles": [
+			"wwwroot/js/select.js"
+		],
+		"minify": {
+			"enabled": true
+		},
+		"sourceMap": false
+	},
+	{
+		"outputFileName": "wwwroot/js/site.min.js",
+		"inputFiles": [
+			"wwwroot/js/site.js"
+		],
+		"minify": {
+			"enabled": true
+		},
+		"sourceMap": false
+	},
+	{
+		"outputFileName": "wwwroot/js/status.min.js",
+		"inputFiles": [
+			"wwwroot/js/status.js"
+		],
+		"minify": {
+			"enabled": true
+		},
+		"sourceMap": false
+	}
+]

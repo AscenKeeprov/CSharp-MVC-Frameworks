@@ -1,0 +1,100 @@
+﻿@using PertensaCo.Web.Areas.Identity.Models;
+@using static PertensaCo.Common.Constants.RoleConstants;
+
+@model RoleCreateViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column form-container col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+		<form asp-area="Identity" asp-controller="Roles" asp-action="Create" method="post" role="form">
+			<fieldset>
+				<legend class="text-center">Create a new Pertensa role</legend>
+				<div class="form-group">
+					<p class="mt-3 px-1 text-justify text-indent-1">
+						<span>Give the role a name that is descriptive of its function but also succinct</span>
+						<span> enough so that it is not too long to track in system menus and reports.</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="Name" class="m-0"></label>
+								<span>
+									<strong class="text-danger" title="Required">&nbsp;&#42;</strong>
+								</span>
+							</span>
+						</div>
+						<input asp-for="Name" class="form-control" />
+					</div>
+					<span asp-validation-for="Name" class="text-danger"></span>
+					<p class="mt-3 px-1 text-justify small">
+						<strong class="text-danger">&#42;&nbsp;</strong>
+						<span>Role name is required. Also, note that it can comprise a combination of no less than</span>
+						<span>@RoleNameMinLength and no more than @RoleNameMaxLength </span>
+						<a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet" tabindex="-1">
+							<span>basic ISO latin letters</span>
+						</a>
+						<span>, </span>
+						<a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Arabic_numerals" tabindex="-1">
+							<span>arabic numerals</span>
+						</a>
+						<span>and underscores </span>
+						<mark class="border border-success pt-0"><code><b class="text-success">&#95;</b></code></mark>
+					</p>
+				</div>
+				<div class="form-group">
+					<p class="mt-3 px-1 text-justify text-indent-1">
+						<span>Although optional, it is highly advisable to specify a display name as well.</span>
+						<span>Again, this is beneficial for administrative and reporting purposes.</span>
+					</p>
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="DisplayName" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="DisplayName" class="form-control" />
+					</div>
+					<span asp-validation-for="DisplayName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="px-1 text-indent-1">
+						<span>Associate the role with an area where it should be used:</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="DepartmentName" class="input-group-text"></label>
+						</div>
+						<select asp-for="DepartmentName" asp-items="@Model.Departments" class="custom-select">
+							<option value="">&raquo;&nbsp;Select a department&nbsp;&laquo;</option>
+						</select>
+					</div>
+					<span asp-validation-for="DepartmentName" class="text-danger"></span>
+				</div>
+				<div class="form-group my-2 text-center">
+					<audio id="clang" preload="auto">
+						<source src="~/sounds/clang.mp3" type="audio/mp3" />
+					</audio>
+					<button type="submit" class="btn btn-plaque">
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+						<span>&nbsp;Create&nbsp;</span>
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+					</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+	<script src="~/js/select.min.js"></script>
+	<script>
+		$(function () {
+			$('.btn-plaque').click(function () {
+				$('#clang')[0].play();
+			});
+		});
+	</script>
+}

@@ -1,0 +1,117 @@
+﻿<div class="collapse sidebar-collapse" id="sidebar" role="menubar">
+	<audio id="filing" preload="auto">
+		<source src="~/sounds/filing.mp3" type="audio/mp3" />
+	</audio>
+	<nav class="d-flex flex-column nav sidebar-nav" role="navigation">
+		@if (User.HasDepartment(EDepartment.HR.ToString()))
+		{
+			<div class="nav-item">
+				<a class="btn nav-button" href="#personnelMenu" data-toggle="collapse" aria-expanded="false" aria-controls="personnelMenu" role="button">
+					<span class="fas fa-caret-right nav-button-icon"></span>
+					<span>Personnel</span>
+				</a>
+				<ul class="collapse sidebar-menu" id="personnelMenu" role="menu">
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Personnel" asp-controller="Employees" asp-action="Hire" class="menu-link" role="link">
+							<span>Hire</span>
+						</a>
+					</li>
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Personnel" asp-controller="Employees" asp-action="Fire" class="menu-link" role="link">
+							<span>Relieve</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		}
+		@if (User.HasDepartment(EDepartment.IT.ToString()))
+		{
+			<div class="nav-item">
+				<a class="btn nav-button" href="#profilesMenu" data-toggle="collapse" aria-expanded="false" aria-controls="profilesMenu" role="button">
+					<span class="fas fa-caret-right nav-button-icon"></span>
+					<span>Profiles</span>
+				</a>
+				<ul class="collapse sidebar-menu" id="profilesMenu" role="menu">
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Identity" asp-controller="Users" asp-action="Create" class="menu-link" role="link">
+							<span>Create</span>
+						</a>
+					</li>
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Identity" asp-controller="Users" asp-action="Status" class="menu-link" role="link">
+							<span>Status</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		}
+		@if (User.HasDepartment(EDepartment.LnP.ToString()))
+		{
+			<div class="nav-item">
+				<a class="btn nav-button" href="#profilesMenu" data-toggle="collapse" aria-expanded="false" aria-controls="profilesMenu" role="button">
+					<span class="fas fa-caret-right nav-button-icon"></span>
+					<span>Supplies</span>
+				</a>
+				<ul class="collapse sidebar-menu" id="profilesMenu" role="menu">
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Logistics" asp-controller="Supplies" asp-action="Check" class="menu-link" role="link">
+							<span>Availability</span>
+						</a>
+					</li>
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Logistics" asp-controller="Supplies" asp-action="Procure" class="menu-link" role="link">
+							<span>Procure</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		}
+		@if (User.HasDepartment(EDepartment.RnD.ToString()))
+		{
+			<div class="nav-item">
+				<a class="btn nav-button" href="#profilesMenu" data-toggle="collapse" aria-expanded="false" aria-controls="profilesMenu" role="button">
+					<span class="fas fa-caret-right nav-button-icon"></span>
+					<span>Research</span>
+				</a>
+				<ul class="collapse sidebar-menu" id="profilesMenu" role="menu">
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Innovation" asp-controller="Research" asp-action="Conduct" class="menu-link" role="link">
+							<span>Conduct</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		}
+		@if (User.HasDepartment(EDepartment.HR.ToString()) || User.HasDepartment(EDepartment.IT.ToString()))
+		{
+			<div class="nav-item">
+				<a class="btn nav-button" href="#rolesMenu" data-toggle="collapse" aria-expanded="false" aria-controls="rolesMenu" role="button" id="coolButton">
+					<span class="fas fa-caret-right nav-button-icon"></span>
+					<span>Roles</span>
+				</a>
+				<ul class="collapse sidebar-menu" id="rolesMenu" role="menu">
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Identity" asp-controller="Roles" asp-action="Create" class="menu-link" role="link">
+							<span>Create</span>
+						</a>
+					</li>
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Identity" asp-controller="Roles" asp-action="Delete" class="menu-link" role="link">
+							<span>Delete</span>
+						</a>
+					</li>
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Identity" asp-controller="Roles" asp-action="Grant" class="menu-link" role="link">
+							<span>Grant</span>
+						</a>
+					</li>
+					<li class="menu-item" role="menuitem">
+						<a asp-area="Identity" asp-controller="Roles" asp-action="Revoke" class="menu-link" role="link">
+							<span>Revoke</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		}
+	</nav>
+</div>

@@ -1,0 +1,167 @@
+﻿@using System.IO;
+@using System.Globalization;
+@using PertensaCo.Web.Areas.Identity.Models;
+
+@model ProfileCreateViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+	var currentDateTime = DateTime.Now.ToString("dd-MMM-yyyy HH:mm", CultureInfo.InvariantCulture);
+	var passwordRules = File.ReadAllText("Areas/Identity/Views/Shared/_PasswordRules.cshtml");
+	var usernameRules = File.ReadAllText("Areas/Identity/Views/Shared/_UsernameRules.cshtml");
+}
+
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column form-container col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+		<form asp-area="Identity" asp-controller="Users" asp-action="Create" method="post" role="form">
+			<fieldset>
+				<legend class="text-center">Create a new Pertensa web profile</legend>
+				<div class="box-highlight">
+					<span>This functionality is aimed exclusively at company staff.</span>
+					<span>External users receive web profiles automatically upon registration.</span>
+				</div>
+				<div class="form-group">
+					<p class="mb-2 px-1 text-indent-1">
+						<span>If there are any recently hired employees without web capabilities,</span>
+						<span> you may pick one here and assign the new profile to them:</span>
+					</p>
+					<div class="input-group">
+						<select asp-for="EmployeeId" asp-items="@Model.Employees" class="custom-select">
+							<option value="@null">&raquo;&nbsp;Select employee&nbsp;&laquo;</option>
+						</select>
+					</div>
+					<span asp-validation-for="EmployeeId" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="Alias" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="Alias" class="form-control border-right-0" />
+						<div class="input-group-append">
+							<span class="input-group-text p-1 bg-transparent">
+								<button type="button" class="btn mx-1 p-0 bg-transparent" title="Alias rules" data-toggle="popover" data-content="@usernameRules" data-placement="bottom" tabindex="-1">
+									<span class="far fa-question-circle fa-sm text-secondary"></span>
+								</button>
+							</span>
+						</div>
+					</div>
+					<span asp-validation-for="Alias" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="EmailAddress" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="EmailAddress" class="form-control" />
+					</div>
+					<span asp-validation-for="EmailAddress" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="PhoneNumber" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="PhoneNumber" class="form-control" />
+					</div>
+					<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="Password" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="Password" class="form-control border-right-0" />
+						<div class="input-group-append">
+							<span class="input-group-text p-1 bg-transparent">
+								<button type="button" class="btn mx-1 p-0 bg-transparent" title="Password rules" data-toggle="popover" data-content="@passwordRules" data-placement="bottom" data-trigger="focus" tabindex="-1">
+									<span class="far fa-question-circle fa-sm text-secondary"></span>
+								</button>
+							</span>
+						</div>
+					</div>
+					<span asp-validation-for="Password" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="RepeatPassword" class="m-0">Confirm password</label>
+							</span>
+						</div>
+						<input asp-for="RepeatPassword" class="form-control" />
+					</div>
+					<span asp-validation-for="RepeatPassword" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group date" id="datetimepicker" data-target-input="nearest">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="DateRegistered" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="DateRegistered" value="@currentDateTime" class="form-control datetimepicker-input" data-target="#datetimepicker" />
+						<div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<span class="far fa-calendar-alt"></span>
+							</div>
+						</div>
+					</div>
+					<span asp-validation-for="DateRegistered" class="text-danger"></span>
+				</div>
+				<div class="form-group my-2 text-center">
+					<audio id="clang" preload="auto">
+						<source src="~/sounds/clang.mp3" type="audio/mp3" />
+					</audio>
+					<button type="submit" class="btn btn-plaque">
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+						<span>&nbsp;Create&nbsp;profile&nbsp;</span>
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+					</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+	<script src="~/js/select.min.js"></script>
+	<script>
+		$(function () {
+			$('[data-toggle="popover"]').popover({
+				html: true
+			});
+		});
+		$(function () {
+			var currentLocale = navigator.language.substring(0, 2);
+			$('#datetimepicker').datetimepicker({
+				buttons: {
+					showClose: true,
+					showToday: true
+				},
+				format: 'DD-MMM-YYYY HH:mm',
+				icons: {
+					date: 'far fa-calendar-alt',
+					down: 'fas fa-chevron-down',
+					time: 'far fa-clock',
+					today: 'fas fa-calendar-day',
+					up: 'fas fa-chevron-up'
+				},
+				locale: currentLocale,
+			});
+		});
+		$(function () {
+			$('.btn-plaque').click(function () {
+				$('#clang')[0].play();
+			});
+		});
+	</script>
+}

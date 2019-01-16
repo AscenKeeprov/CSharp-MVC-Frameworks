@@ -1,0 +1,127 @@
+﻿[
+	{
+		"Element": "Ag",
+		"Form": "Pellets",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Al",
+		"Form": "Slabs",
+		"QuantityInKg": 2083.47
+	},
+	{
+		"Element": "B",
+		"Form": "Pellets",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Cd",
+		"Form": "Sheets",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Co",
+		"Form": "Rods",
+		"QuantityInKg": 85.6
+	},
+	{
+		"Element": "Cr",
+		"Form": "Sheets",
+		"QuantityInKg": 729.3
+	},
+	{
+		"Element": "Cu",
+		"Form": "Slabs",
+		"QuantityInKg": 961.72
+	},
+	{
+		"Element": "Cu",
+		"Form": "Wires",
+		"QuantityInKg": 115.497
+	},
+	{
+		"Element": "Fe",
+		"Form": "Bars",
+		"QuantityInKg": 4504.91
+	},
+	{
+		"Element": "Fe",
+		"Form": "Rods",
+		"QuantityInKg": 1060.8
+	},
+	{
+		"Element": "Hf",
+		"Form": "Sheets",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "In",
+		"Form": "Sheets",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Mn",
+		"Form": "Pellets",
+		"QuantityInKg": 63.224
+	},
+	{
+		"Element": "Mo",
+		"Form": "Slabs",
+		"QuantityInKg": 581.72
+	},
+	{
+		"Element": "Nb",
+		"Form": "Pellets",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Ni",
+		"Form": "Bars",
+		"QuantityInKg": 376.5
+	},
+	{
+		"Element": "Pd",
+		"Form": "Bars",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Ru",
+		"Form": "Pellets",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Sn",
+		"Form": "Sheets",
+		"QuantityInKg": 192.88
+	},
+	{
+		"Element": "Ta",
+		"Form": "Rods",
+		"QuantityInKg": 0
+	},
+	{
+		"Element": "Te",
+		"Form": "Pellets",
+		"QuantityInKg": 49.513
+	},
+	{
+		"Element": "Ti",
+		"Form": "Slabs",
+		"QuantityInKg": 465.9
+	},
+	{
+		"Element": "V",
+		"Form": "Rods",
+		"QuantityInKg": 327.25
+	},
+	{
+		"Element": "W",
+		"Form": "Rods",
+		"QuantityInKg": 204.664
+	},
+	{
+		"Element": "Zn",
+		"Form": "Bars",
+		"QuantityInKg": 715.1
+	}
+]

@@ -1,0 +1,86 @@
+﻿@using PertensaCo.Entities;
+@using PertensaCo.Web.Areas.Identity.Models;
+@using PertensaCo.Web.Areas.Personnel.Models;
+@using PertensaCo.Web.Extensions;
+
+@model ProfileViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+	bool userIsClient = User.HasType(nameof(Client));
+	bool userIsEmployee = User.HasType(nameof(Employee));
+}
+
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column col-12 col-md-10 col-lg-8 mx-auto">
+		@if (userIsEmployee)
+		{
+			<h4 class="text-center">Review your Pertensa profile</h4>
+		}
+		else
+		{
+			<h4 class="text-center">Manage your Pertensa profile</h4>
+		}
+		<nav>
+			<div class="nav nav-tabs" role="tablist">
+				@if (userIsClient)
+				{
+					<a class="nav-item nav-link" href="#personalInfo" id="profile-tab-personal" data-toggle="tab" aria-controls="personalInfo" aria-selected="true" role="tab">Personal Information</a>
+					<a class="nav-item nav-link" href="#billingInfo" id="profile-tab-billing" data-toggle="tab" aria-controls="billingInfo" aria-selected="false" role="tab">Billing Information</a>
+					<a class="nav-item nav-link" href="#ordersHistory" id="profile-tab-orders" data-toggle="tab" aria-controls="ordersHistory" aria-selected="false" role="tab">Orders History</a>
+				}
+				else if (userIsEmployee)
+				{
+					<a class="nav-item nav-link active" href="#personalInfo" id="profile-tab-personal" data-toggle="tab" aria-controls="personalInfo" aria-selected="true" role="tab">Employee information</a>
+				}
+				@if (!userIsEmployee)
+				{
+					<a class="nav-item nav-link active" href="#profileSettings" id="profile-tab-settings" data-toggle="tab" aria-controls="profileSettings" aria-selected="false" role="tab">Profile settings</a>
+				}
+			</div>
+		</nav>
+		<audio id="clang" preload="auto">
+			<source src="~/sounds/clang.mp3" type="audio/mp3" />
+		</audio>
+		<form asp-area="Identity" asp-controller="Users" asp-action="Profile" method="post" role="form">
+			<div class="form-container tab-content">
+				@if (userIsClient)
+				{
+					var clientModel = Model as ClientProfileViewModel;
+					<div class="tab-pane fade" id="personalInfo" aria-labelledby="profile-tab-personal" role="tabpanel">
+						<partial name="~/Areas/Identity/Views/Shared/_ClientInfoPartial.cshtml" model="@clientModel" />
+					</div>
+					<div class="tab-pane fade" id="billingInfo" aria-labelledby="profile-tab-billing" role="tabpanel">
+						<partial name="~/Areas/Identity/Views/Shared/_BillingInfoPartial.cshtml" model="@clientModel" />
+					</div>
+					<div class="tab-pane fade" id="ordersHistory" aria-labelledby="profile-tab-orders" role="tabpanel">
+						<partial name="~/Areas/Identity/Views/Shared/_OrdersHistoryPartial.cshtml" model="@clientModel" />
+					</div>
+				}
+				else if (userIsEmployee)
+				{
+					var employeeModel = Model as EmployeeProfileViewModel;
+					<div class="tab-pane fade show active" id="personalInfo" aria-labelledby="profile-tab-personal" role="tabpanel">
+						<partial name="~/Areas/Personnel/Views/Shared/_EmployeeInfoPartial.cshtml" model="@employeeModel" />
+					</div>
+				}
+				@if (!userIsEmployee)
+				{
+					<div class="tab-pane fade show active" id="profileSettings" aria-labelledby="profile-tab-settings" role="tabpanel">
+						<partial name="~/Areas/Identity/Views/Shared/_ProfileSettingsPartial.cshtml" model="@Model" />
+					</div>
+				}
+			</div>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+	<script>
+		$(function () {
+			$('.btn-plaque').click(function () {
+				$('#clang')[0].play();
+			});
+		});
+	</script>
+}

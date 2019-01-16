@@ -1,0 +1,101 @@
+﻿@using PertensaCo.Web.Areas.Identity.Models;
+
+@model RoleGrantViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<partial name="~/Views/Shared/_StatusMessagePartial.cshtml" />
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column form-container col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+		<form asp-area="Identity" asp-controller="Roles" asp-action="Grant" method="post" role="form">
+			<fieldset>
+				<legend class="text-center">Grant roles to Pertensa profiles</legend>
+				<div class="form-group">
+					<p class="px-1 text-indent-1">
+						<span>Following is a list of available roles. If none of those applies to the task at hand,</span>
+						<a asp-area="Identity" asp-controller="Roles" asp-action="Create">
+							<span>create another.</span>
+						</a>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="RoleName" class="input-group-text"></label>
+						</div>
+						<select asp-for="RoleName" asp-items="@Model.Roles" class="custom-select">
+							<option value="">&raquo;&nbsp;Select a role to grant&nbsp;&laquo;</option>
+						</select>
+					</div>
+					<span asp-validation-for="RoleName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="px-1 text-indent-1">
+						<span>And these are all profiles eligible for the grant:</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="SelectedProfiles" class="input-group-text"></label>
+						</div>
+						<select asp-for="SelectedProfiles" asp-items="@Model.AvailableProfiles" class="custom-select" disabled></select>
+					</div>
+					<span asp-validation-for="SelectedProfiles" class="text-danger"></span>
+				</div>
+				<div class="form-group my-2 text-center">
+					<audio id="clang" preload="auto">
+						<source src="~/sounds/clang.mp3" type="audio/mp3" />
+					</audio>
+					<button asp- type="submit" class="btn btn-plaque">
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+						<span>&nbsp;Grant role&nbsp;</span>
+						<span class="far fa-times-circle fa-sm screw-head"></span>
+					</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+	<script src="~/js/select.min.js"></script>
+	<script src="~/js/ajax.min.js"></script>
+	<script>
+		$(function () {
+			$('#RoleName').change(function () {
+				var profilesSelect = $('#SelectedProfiles');
+				profilesSelect.children('option').each(function () {
+					$(this).removeAttr('selected');
+					$(this).show();
+				});
+				profilesSelect.val('');
+				var roleName = $(this).val();
+				if (roleName != '') {
+					$.ajax({
+						type: 'get',
+						url: 'FilterProfilesByRole?rn=' + roleName,
+						success: function (response) {
+							var eligibleProfiles = response.eligibleProfiles;
+							profilesSelect.children('option').each(function () {
+								var profile = $(this).prop('value');
+								if ($.inArray(profile, eligibleProfiles) === -1) {
+									$(this).hide();
+								}
+							});
+						},
+						error: function () {
+							alert('Failed to filter profiles list.')
+						}
+					});
+					profilesSelect.removeAttr('disabled');
+				} else {
+					profilesSelect.attr('disabled', 'disabled');
+				}
+			});
+		});
+		$(function () {
+			$('.btn-plaque').click(function () {
+				$('#clang')[0].play();
+			});
+		});
+	</script>
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appService_PertensaCoWeb_name": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_location": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_name": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_resourceGroup": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_skuName": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_skuTier": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_skuFamily": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_skuSize": {
+      "type": "string"
+    },
+    "appServicePlan_NorthEuropeS1_workerSizeId": {
+      "type": "int"
+    }
+  },
+  "resources": [
+    {
+      "location": "[parameters('appServicePlan_NorthEuropeS1_location')]",
+      "name": "[parameters('appService_PertensaCoWeb_name')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2015-08-01",
+      "tags": {
+        "[concat('hidden-related:', resourceId(parameters('appServicePlan_NorthEuropeS1_resourceGroup'),'Microsoft.Web/serverfarms', parameters('appServicePlan_NorthEuropeS1_name')))]": "empty"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlan_NorthEuropeS1_name'))]"
+      ],
+      "kind": "app",
+      "properties": {
+        "name": "[parameters('appService_PertensaCoWeb_name')]",
+        "serverFarmId": "[resourceId(parameters('appServicePlan_NorthEuropeS1_resourceGroup'),'Microsoft.Web/serverfarms', parameters('appServicePlan_NorthEuropeS1_name'))]",
+        "kind": "app",
+        "httpsOnly": true
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      }
+    },
+    {
+      "location": "[parameters('appServicePlan_NorthEuropeS1_location')]",
+      "name": "[parameters('appServicePlan_NorthEuropeS1_name')]",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2015-08-01",
+      "sku": {
+        "name": "[parameters('appServicePlan_NorthEuropeS1_skuName')]",
+        "tier": "[parameters('appServicePlan_NorthEuropeS1_skuTier')]",
+        "family": "[parameters('appServicePlan_NorthEuropeS1_skuFamily')]",
+        "size": "[parameters('appServicePlan_NorthEuropeS1_skuSize')]"
+      },
+      "properties": {
+        "name": "[parameters('appServicePlan_NorthEuropeS1_name')]"
+      }
+    }
+  ]
+}

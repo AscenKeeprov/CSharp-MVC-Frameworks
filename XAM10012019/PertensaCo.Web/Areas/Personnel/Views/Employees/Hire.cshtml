@@ -1,0 +1,300 @@
+﻿@using PertensaCo.Web.Areas.Personnel.Models;
+
+@model EmployeeHireViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<partial name="~/Views/Shared/_StatusMessagePartial.cshtml" />
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column form-container col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+		<form asp-area="Personnel" asp-controller="Employees" asp-action="Hire" method="post" enctype="multipart/form-data" role="form">
+			<h4 class="text-center">Hire a new Pertensa employee</h4>
+			<hr class="hr3" />
+			<fieldset class="border">
+				<legend>Personal Information</legend>
+				<div class="form-row justify-content-between">
+					<div class="d-flex flex-column flex-grow-1 form-group my-1 px-1 order-2 order-sm-1">
+						<span asp-validation-for="FirstName" class="text-danger"></span>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text p-1">
+									<label asp-for="FirstName" class="m-0"></label>
+								</span>
+							</div>
+							<input asp-for="FirstName" class="form-control" />
+						</div>
+						<span asp-validation-for="MiddleName" class="text-danger"></span>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text p-1">
+									<label asp-for="MiddleName" class="m-0"></label>
+								</span>
+							</div>
+							<input asp-for="MiddleName" class="form-control" />
+						</div>
+						<span asp-validation-for="LastName" class="text-danger"></span>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text p-1">
+									<label asp-for="LastName" class="m-0"></label>
+								</span>
+							</div>
+							<input asp-for="LastName" class="form-control" />
+						</div>
+					</div>
+					<picture class="d-flex flex-column my-1 px-1 order-1 order-sm-2">
+						<img src="~/images/blank-bio-picture.jpg" class="rounded" height="152" width="128" alt="Bio photo" id="bioPhoto">
+						<input asp-for="Portrait" class="form-control-file hidden-file-input" id="bioPhotoInput" hidden />
+					</picture>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="HomeAddress" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="HomeAddress" class="form-control" />
+					</div>
+					<span asp-validation-for="HomeAddress" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="PIN" class="m-0" title="National identification number"></label>
+							</span>
+						</div>
+						<input asp-for="PIN" class="form-control" />
+					</div>
+					<span asp-validation-for="PIN" class="text-danger"></span>
+				</div>
+			</fieldset>
+			<fieldset class="border">
+				<legend>Work Information</legend>
+				<div class="form-group">
+					<span asp-validation-for="WorkAddress" class="text-danger"></span>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="WorkAddress" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="WorkAddress" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<p class="mb-2 px-1 text-indent-1">
+						<span>Specify which department the employee will work in:</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="DepartmentName" class="input-group-text"></label>
+						</div>
+						<select asp-for="DepartmentName" asp-items="@Model.Departments" class="custom-select">
+							<option value="@null">&raquo;&nbsp;Select department&nbsp;&laquo;</option>
+						</select>
+					</div>
+					<span asp-validation-for="DepartmentName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="mb-2 px-1 text-indent-1">
+						<span>Then the name of the manager whose team they will join:</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="ManagerId" class="input-group-text"></label>
+						</div>
+						<select asp-for="ManagerId" asp-items="@Model.Managers" class="custom-select" disabled="disabled">
+							<option value="@null">&raquo;&nbsp;Select manager&nbsp;&laquo;</option>
+						</select>
+					</div>
+					<span asp-validation-for="ManagerId" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="mb-2 px-1 text-indent-1">
+						<span>As well as their position in the company hierarchy:</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="RoleName" class="input-group-text"></label>
+						</div>
+						<select asp-for="RoleName" asp-items="@Model.Roles" class="custom-select" disabled>
+							<option value="@null">&raquo;&nbsp;Select role&nbsp;&laquo;</option>
+						</select>
+					</div>
+					<span asp-validation-for="RoleName" class="text-danger"></span>
+					<p class="mt-2 px-1 text-indent-1">
+						<span>In case no suitable roles are available,</span>
+						<a asp-area="Identity" asp-controller="Roles" asp-action="Create" tabindex="-1">
+							<span>create a new one.</span>
+						</a>
+					</p>
+				</div>
+				<div class="form-group">
+					<p class="mb-2 px-1 text-indent-1">
+						<span>Enter the initial monthly remuneration:</span>
+					</p>
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="MonthlySalaryInEUR" class="m-0">Salary&nbsp;(&euro;)</label>
+							</span>
+						</div>
+						<input asp-for="MonthlySalaryInEUR" type="number" step="0.01" class="form-control" />
+					</div>
+					<span asp-validation-for="MonthlySalaryInEUR" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="DateHired" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="DateHired" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+					</div>
+					<span asp-validation-for="DateHired" class="text-danger"></span>
+					<div class="form-check check-screw my-1 px-2">
+						<input asp-for="IsTemporary" class="checkbox" />
+						<label asp-for="IsTemporary" class="checkcircle-label m-0">
+							<span class="far fa-circle fa-sm checkcircle"></span>
+							<span>&nbsp;Temporary&nbsp;contractor</span>
+						</label>
+					</div>
+					<div class="input-group mb-3" id="contractEndDate" style="display:none">
+						<div class="input-group-prepend">
+							<span class="input-group-text p-1">
+								<label asp-for="DateRelieved" class="m-0"></label>
+							</span>
+						</div>
+						<input asp-for="DateRelieved" value="1111-11-11" class="form-control" />
+					</div>
+					<span asp-validation-for="DateRelieved" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<p class="mb-2 px-1 text-indent-1">
+						<span>If a work profile has been created in advance, you can pick it here:</span>
+					</p>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label asp-for="ProfileId" class="input-group-text"></label>
+						</div>
+						<select asp-for="ProfileId" asp-items="@Model.Profiles" class="custom-select">
+							<option value="@null">&raquo;&nbsp;Select profile&nbsp;&laquo;</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-group my-2 text-center">
+				<audio id="clang" preload="auto">
+					<source src="~/sounds/clang.mp3" type="audio/mp3" />
+				</audio>
+				<button type="submit" class="btn btn-plaque">
+					<span class="far fa-times-circle fa-sm screw-head"></span>
+					<span>&nbsp;Hire&nbsp;employee&nbsp;</span>
+					<span class="far fa-times-circle fa-sm screw-head"></span>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+	<script src="~/js/checkcircle.min.js"></script>
+	<script src="~/js/select.min.js"></script>
+	<script src="~/js/ajax.min.js"></script>
+	<script>
+		$(function () {
+			$('#bioPhoto').click(function () {
+				$('#bioPhotoInput').click();
+			});
+		});
+		$(function () {
+			$('#bioPhotoInput').change(function (e) {
+				var src = URL.createObjectURL(e.target.files[0]);
+				$('#bioPhoto').attr('src', src);
+			});
+		});
+		$(function () {
+			$('#DepartmentName').change(function () {
+				var managersSelect = $('#ManagerId');
+				managersSelect.children('option').each(function () {
+					$(this).removeAttr('selected');
+					$(this).show();
+				});
+				managersSelect.val('');
+				var rolesSelect = $('#RoleName');
+				rolesSelect.children('option').each(function () {
+					$(this).removeAttr('selected');
+					$(this).show();
+				});
+				rolesSelect.val('');
+				var profilesSelect = $('#ProfileId');
+				var department = $(this).val();
+				if (department != '') {
+					$.ajax({
+						type: 'get',
+						url: 'FilterEmployeesRolesByDepartment?dn=' + department,
+						success: function (response) {
+							var managerIds = response.employeeIds;
+							managersSelect.children('option').each(function () {
+								var managerId = $(this).prop('value');
+								if ($.inArray(managerId, managerIds) === -1) {
+									$(this).hide();
+								}
+							});
+							var roleNames = response.roleNames;
+							rolesSelect.children('option').each(function () {
+								var roleName = $(this).prop('value');
+								if ($.inArray(roleName, roleNames) === -1) {
+									$(this).hide();
+								}
+							});
+						},
+						error: function () {
+							alert('Failed to filter managers/roles. Please reload page.')
+						}
+					});
+					managersSelect.removeAttr('disabled');
+					rolesSelect.removeAttr('disabled');
+				} else {
+					$.ajax({
+						type: 'get',
+						url: 'FilterProfilesWithoutEmployee',
+						success: function (response) {
+							var profileIds = response.profileIds;
+							profilesSelect.children('option').each(function () {
+								var profileId = $(this).prop('value');
+								if ($.inArray(profileId, profileIds) === -1) {
+									$(this).hide();
+								}
+							});
+						},
+						error: function () {
+							alert('Failed to filter profiles. Please reload page.')
+						}
+					});
+					managersSelect.attr('disabled', 'disabled');
+					rolesSelect.attr('disabled', 'disabled');
+				}
+			});
+		});
+		$(function () {
+			$('#IsTemporary').change(function () {
+				if ($(this).is(':checked')) {
+					$('#contractEndDate').show();
+				} else {
+					$('#contractEndDate').hide();
+				}
+			});
+		});
+		$(function () {
+			$('.btn-plaque').click(function () {
+				$('#clang')[0].play();
+			});
+		});
+	</script>
+}

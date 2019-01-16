@@ -1,0 +1,61 @@
+﻿@using PertensaCo.Web.Areas.Personnel.Models;
+
+@model EmployeeProfileViewModel
+
+<fieldset>
+	<div class="form-group">
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Name:&nbsp;</label>
+			<span class="ml-auto pr-3">@($"{Model.FirstName} {Model.MiddleName} {Model.LastName}")</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Home address:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.HomeAddress</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Contract start date:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.DateHired</span>
+		</div>
+		@if (!string.IsNullOrWhiteSpace(Model.DateRelieved))
+		{
+			<div class="form-row justify-content-between my-1 px-1">
+				<label class="mb-0 pl-3 font-weight-bold">Contract end date:&nbsp;</label>
+				<span class="ml-auto pr-3">@Model.DateRelieved</span>
+			</div>
+		}
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Office location:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.WorkAddress</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Department:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.Department</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Manager:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.Manager</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Monthly remuneration:&nbsp;</label>
+			<span class="ml-auto pr-3">&euro;@Model.Salary.ToString("0.00")</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Alias:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.Alias</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">E-mail address:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.EmailAddress</span>
+		</div>
+		<div class="form-row justify-content-between my-1 px-1">
+			<label class="mb-0 pl-3 font-weight-bold">Phone number:&nbsp;</label>
+			<span class="ml-auto pr-3">@Model.PhoneNumber</span>
+		</div>
+	</div>
+	<div class="form-group my-2 text-center">
+		<a class="btn btn-plaque m-1" href="#">Request information update</a>
+		<a asp-area="Identity" asp-controller="Users" asp-action="ChangePassword" class="btn btn-plaque m-1" tabindex="-1">
+			<span>Change profile password</span>
+		</a>
+	</div>
+</fieldset>

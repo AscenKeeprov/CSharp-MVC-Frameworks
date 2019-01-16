@@ -1,0 +1,27 @@
+﻿@using PertensaCo.Web.Models;
+
+@*@model MimeMessageModel*@
+
+<div class="row">
+	<h1>Subject: @Model.Subject</h1>
+</div>
+<div class="row">
+	<h3>From: @Model.SenderEmail</h3>
+</div>
+<div class="row">
+	<h3>On: @Model.DateSent</h3>
+</div>
+<div class="row">
+	<textarea>@Model.Content</textarea>
+</div>
+@if (Model.Attachments.Any())
+{
+	<div class="row">
+		<span>Attachments: </span>
+		@foreach (var attachment in Model.Attachments)
+		{
+			<span>ICON</span>
+			<a href="/">Download link</a>
+		}
+	</div>
+}

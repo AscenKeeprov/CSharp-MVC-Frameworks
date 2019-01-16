@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="MailKit" Version="2.1.0.3" />
+	<PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\PertensaCo.Data\PertensaCo.Data.csproj" />
+	<ProjectReference Include="..\PertensaCo.Entities\PertensaCo.Entities.csproj" />
+  </ItemGroup>
+  
+</Project>

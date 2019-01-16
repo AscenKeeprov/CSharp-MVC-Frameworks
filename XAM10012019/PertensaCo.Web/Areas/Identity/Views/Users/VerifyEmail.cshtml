@@ -1,0 +1,25 @@
+﻿@using PertensaCo.Web.Areas.Identity.Models;
+
+@model VerifyEmailViewModel
+
+@{
+	ViewData[TitleKey] = Model.PageTitle;
+}
+
+<div class="d-flex flex-row my-1 px-1">
+	<div class="d-flex flex-column col-10 mx-auto text-center">
+		@if (Model.Exception != null)
+		{
+			<h3 class="mt-3 text-warning">E-mail address could not be verified!</h3>
+			if (!string.IsNullOrWhiteSpace(Model.FailureReason))
+			{
+				<h5>Reason: @Model.FailureReason</h5>
+			}
+			<p>Contact your administrator for assistance with the verification link.</p>
+		}
+		else
+		{
+			<h3 class="mt-3 text-success">Thank you for verifying your e-mail address, @Model.ProfileName!</h3>
+		}
+	</div>
+</div>

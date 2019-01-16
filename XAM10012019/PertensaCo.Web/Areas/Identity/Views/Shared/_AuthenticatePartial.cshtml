@@ -1,0 +1,38 @@
+﻿@using PertensaCo.Web.Extensions;
+
+@if (User.Identity.IsAuthenticated)
+{
+	string username = User.Identity.Name;
+	string profileId = Context.GetUserId() ?? username;
+	<ul class="navbar-nav d-flex d-inline-flex flex-row ml-auto">
+		<li class="nav-item mx-2 mx-sm-0">
+			<a asp-area="Identity" asp-controller="Users" asp-action="Profile" asp-route-pid="@profileId" title="View profile" class="nav-link">
+				<span class="fa fa-user-alt fa-sm"></span>
+				<span class="nav-link-label">Hello, @username!</span>
+			</a>
+		</li>
+		<li class="nav-item mx-2 mx-sm-0">
+			<a asp-area="Identity" asp-controller="Users" asp-action="SignOut" class="nav-link">
+				<span class="nav-link-label">Sign Out</span>
+				<span class="fa fa-sign-out-alt fa-sm"></span>
+			</a>
+		</li>
+	</ul>
+}
+else
+{
+	<ul class="navbar-nav d-flex d-inline-flex flex-row ml-auto">
+		<li class="nav-item mx-2 mx-sm-0">
+			<a asp-area="Identity" asp-controller="Users" asp-action="SignIn" class="nav-link">
+				<span class="fa fa-sign-in-alt fa-sm"></span>
+				<span class="nav-link-label">Sign In</span>
+			</a>
+		</li>
+		<li class="nav-item mx-2 mx-sm-0">
+			<a asp-area="Identity" asp-controller="Users" asp-action="Register" class="nav-link">
+				<span class="fa fa-user-edit fa-sm"></span>
+				<span class="nav-link-label">Register</span>
+			</a>
+		</li>
+	</ul>
+}
