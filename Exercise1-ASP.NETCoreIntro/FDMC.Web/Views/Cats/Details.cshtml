@@ -1,0 +1,17 @@
+﻿@model FDMC.Web.Entities.Cat
+@{
+    ViewData["Title"] = "Cat Info";
+}
+
+<h1>@Model.Name</h1>
+<div>
+    <p>
+        <img src="@Model.ImageUrl" alt="@Model.Name" width="300" />
+    </p>
+    <p>
+        <b>Age: @Model.Age</b>
+    </p>
+    <p>
+        <b>Breed: @Model.Breed</b>
+    </p>
+</div>

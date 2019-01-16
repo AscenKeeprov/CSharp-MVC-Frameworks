@@ -1,0 +1,24 @@
+﻿@model IEnumerable<FDMC.Web.Entities.Cat>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Fluffy Duffy Munchkin Cats</h1>
+<div>
+    @if (Model.Any())
+    {
+        <hr />
+        <ul>
+            @foreach (var cat in Model)
+	    {
+                <li>
+                    <a href="/cats/@cat.Id">@cat.Name</a>
+                </li>
+	    }
+        </ul>
+    }
+</div>
+<hr />
+<div>
+    <a class="btn btn-default" href="/cats/add">Add Cat</a>
+</div>
