@@ -1,0 +1,44 @@
+﻿@using Chushka.Web.Models
+
+@model ProductViewModel[]
+
+@if (Context.User.Identity.IsAuthenticated)
+{
+    <div class="row text-center">
+        <div class="col-12 mx-auto text-center">
+            <h2>Greetings, @Context.User.Identity.Name!</h2>
+            @if (Context.User.IsInRole(AdminRoleName))
+	    {
+                <h4>Enjoy your work today!</h4>
+	    }
+	    else
+	    {
+                <h4>Feel free to view and order any of our products.</h4>
+	    }
+        </div>
+    </div>
+    <hr class="hr-2 bg-dark" />
+    @if (!Model.Any())
+    {
+        <h5 class="text-center">No products available.</h5>
+    }
+    else
+    {
+        <partial name="~/Views/Shared/_ProductsCataloguePartial.cshtml" model="Model" />
+    }
+}
+else
+{
+    <div class="jumbotron mt-3 bg-chushka">
+        <h1 class="text-white">Welcome to Chushka Universal Web Shop</h1>
+        <hr class="bg-darkgrey" />
+        <h3 class="text-white">
+            <a asp-area="" asp-controller="Users" asp-action="Login" class="text-darkgrey">Login</a>
+            <span> if you have an account.</span>
+        </h3>
+        <h3 class="text-white">
+            <a asp-area="" asp-controller="Users" asp-action="Register" class="text-darkgrey">Register</a>
+            <span> if you don't.</span>
+        </h3>
+    </div>
+}

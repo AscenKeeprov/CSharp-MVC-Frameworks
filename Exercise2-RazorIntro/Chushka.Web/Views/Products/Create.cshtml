@@ -1,0 +1,83 @@
+﻿@using Chushka.Web.Models
+
+@model ProductViewModel
+
+<div class="row">
+    <div class="col-12 mt-3 mx-auto">
+        <h3 class="text-center">Create Product</h3>
+    </div>
+</div>
+<hr class="hr-2 bg-dark" />
+<div class="row">
+    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+        <form asp-controller="Products" asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Name..." />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input asp-for="Price" type="number" min="0.01" step="0.01" class="form-control" placeholder="Price..." />
+                </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Description..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h5 class="text-center">Product Type</h5>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center">
+                            <hr class="hr-2 w-50 bg-dark" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 p-0">
+                        <div class="d-flex flex-wrap align-items-center justify-content-around">
+                            @foreach (var productType in Model.ProductTypes)
+			    {
+				string radioId = $"{nameof(Type).ToLower()}{(int)productType}";
+                                <label asp-for="Type" class="radio-inline align-self-center m-2">
+                                    <input asp-for="Type" type="radio" value="@productType.ToString()" id="@radioId" />
+                                    <span>&nbsp;@productType.ToString()</span>
+                                </label>
+			    }
+                        </div>
+                        <div class="text-center">
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center">
+                            <hr class="hr-2 w-50 bg-dark" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4 mx-auto">
+                        <div class="d-flex flex-wrap justify-content-around">
+                            <button type="submit" class="btn bg-chushka text-white">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}

@@ -1,0 +1,79 @@
+﻿@using Chushka.Web.Models
+
+@model ProductViewModel
+
+<div class="row">
+    <div class="col-12 mt-3 mx-auto">
+        <h3 class="text-center">Delete Product</h3>
+    </div>
+</div>
+<hr class="hr-2 bg-dark" />
+<div class="row">
+    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+        <form asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Name..." disabled />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input asp-for="Price" type="number" min="0.01" step="0.01" class="form-control" placeholder="Price..." disabled />
+                </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Description..." disabled></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h5 class="text-center">Product Type</h5>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center">
+                            <hr class="hr-2 w-50 bg-dark" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 p-0">
+                        <div class="d-flex flex-wrap align-items-center justify-content-around">
+                            @foreach (var productType in Model.ProductTypes)
+			    {
+				string radioId = $"{nameof(Type).ToLower()}{(int)productType}";
+                                <label asp-for="Type" class="radio-inline align-self-center m-2">
+                                    <input asp-for="Type" type="radio" value="@productType.ToString()" id="@radioId" disabled />
+                                    <span>&nbsp;@productType.ToString()</span>
+                                </label>
+			    }
+                        </div>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center">
+                            <hr class="hr-2 w-50 bg-dark" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4 mx-auto">
+                        <div class="d-flex flex-wrap justify-content-around">
+                            <button type="submit" class="btn my-1 bg-chushka text-white">Delete</button>
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" class="btn my-1 bg-chushka text-white">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

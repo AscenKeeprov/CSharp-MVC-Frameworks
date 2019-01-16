@@ -1,0 +1,29 @@
+﻿@using Chushka.Web.Models
+
+@model LoginViewModel
+
+<div class="row">
+    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+        <h2 class="text-center">Login</h2>
+        <hr class="bg-secondary" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-controller="Users" asp-action="Login" method="post">
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" placeholder="Username..." />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" placeholder="Password..." />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn bg-chushka text-white">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}

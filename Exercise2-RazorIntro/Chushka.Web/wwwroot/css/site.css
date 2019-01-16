@@ -1,0 +1,52 @@
+﻿.bg-chushka {
+    background-color: #EC2C4C;
+}
+
+.bg-darkgrey {
+    background-color: darkgray;
+}
+
+.btn-link-white {
+    color: white;
+}
+
+.hr-2 {
+    height: 2px;
+    margin: 8px 0 8px 0
+}
+
+.nav-link-white {
+    color: white !important;
+}
+
+.text-chushka {
+    color: #EC2C4C;
+}
+
+.text-darkgrey {
+    color: darkgray;
+}
+
+    .text-darkgrey:hover {
+        color: white;
+    }
+
+a:hover {
+    outline: none;
+    text-decoration: none;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    border: 0;
+    width: 98%;
+}
+
+textarea {
+    resize: none;
+}
+
+tr:hover {
+    color: black !important;
+}

@@ -1,0 +1,40 @@
+﻿@using Chushka.Web.Models
+
+@model OrderViewModel[]
+
+<div class="row">
+    <div class="col-12 mt-2 mx-auto">
+        <h3 class="text-center"><b>All Orders</b></h3>
+    </div>
+</div>
+<hr class="hr-2 bg-dark" />
+<div class="row">
+    <div class="col-12 col-md-10 mx-auto">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Ordered On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int order = 0; order < Model.Length; order++)
+		    {
+			var rowNumber = order + 1;
+                        <tr class="@(rowNumber % 2 != 0 ? "bg-chushka text-white" : "bg-white")">
+                            <th scope="row">@rowNumber</th>
+                            <td>@Model[order].OrderId</td>
+                            <td>@Model[order].CustomerName</td>
+                            <td>@Model[order].ProductName</td>
+                            <td>@Model[order].OrderDate</td>
+                        </tr>
+		    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

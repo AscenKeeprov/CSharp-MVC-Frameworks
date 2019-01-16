@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHUSHKA</title>
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/site.css">
+</head>
+<body>
+    <header class="container-fluid">
+        <nav class="navbar navbar-expand-sm navbar-dark p-1 bg-chushka">
+            <a class="navbar-brand nav-link-white ml-2 mr-auto pb-2" href="/">
+                <img src="~/images/chushka-brand.png" width="140" height="25" alt="CHUSHKA">
+            </a>
+            <button class="navbar-toggler ml-auto mr-2 border-white" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse ml-2" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Index" class="nav-link nav-link-white">Home</a>
+                    </li>
+                    @if (Context.User.IsInRole(AdminRoleName))
+		    {
+                        <li class="nav-item">
+                            <a asp-controller="Products" asp-action="Create" class="nav-link nav-link-white">Create Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Orders" asp-action="All" class="nav-link nav-link-white">All Orders</a>
+                        </li>
+		    }
+                </ul>
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+    <main class="container-fluid">
+        @RenderBody()
+    </main>
+    <footer class="footer container-fluid d-none d-sm-block">
+        <div class="p-2 bg-chushka text-center text-white">
+            <span>&copy; CopyRight Sanity Web Design Studios 2018. All rights reserved.</span>
+        </div>
+    </footer>
+    <script type="text/javascript" src="~/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/bootstrap.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
